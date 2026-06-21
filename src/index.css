@@ -864,9 +864,9 @@ textarea {
    ========================================= */
 
 body.pdf-export-mode .resume-document {
-  width: 21cm !important;
-  min-height: 29.5cm !important;
-  padding: 1.5cm 2cm !important;
+  width: 17cm !important;
+  min-height: 26.7cm !important;
+  padding: 0 !important;
 }
 
 body.pdf-export-mode .res-contact {

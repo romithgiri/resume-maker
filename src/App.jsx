@@ -75,7 +75,7 @@ function App() {
     document.body.classList.add('pdf-export-mode');
 
     const opt = {
-      margin: 0,
+      margin: [15, 20, 15, 20],
       filename: `${resumeData.personalInfo.fullName.replace(/\s+/g, '_')}_Resume.pdf`,
       image: { type: 'jpeg', quality: 0.98 },
       enableLinks: true,
