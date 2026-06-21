@@ -1,7 +1,7 @@
 
 
 function TemplateExecutive({ resumeData }) {
-  const { personalInfo, summary, experience, education, skills, projects } = resumeData;
+  const { personalInfo, summary, experience, education, skills, projects, certifications } = resumeData;
 
   const renderBulletPoints = (text) => {
     if (!text) return null;
@@ -92,6 +92,28 @@ function TemplateExecutive({ resumeData }) {
                   <div className="res-item-meta">
                     <span className="res-location">{edu.location}</span>
                     <span className="res-date">{edu.startDate} – {edu.endDate}</span>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </section>
+      )}
+
+      {/* Certifications */}
+      {certifications && certifications.length > 0 && (
+        <section className="res-section">
+          <h3 className="res-section-title">CERTIFICATIONS & RECOGNITION</h3>
+          <div className="res-items">
+            {certifications.map(cert => (
+              <div key={cert.id} className="res-item">
+                <div className="res-item-header">
+                  <div className="res-item-main">
+                    <h4 className="res-company">{cert.name}</h4>
+                    {cert.issuer && <span className="res-role">{cert.issuer}</span>}
+                  </div>
+                  <div className="res-item-meta">
+                    <span className="res-date">{cert.date}</span>
                   </div>
                 </div>
               </div>

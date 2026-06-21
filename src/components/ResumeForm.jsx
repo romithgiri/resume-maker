@@ -1,5 +1,5 @@
 
-import { User, Briefcase, GraduationCap, Code, LayoutList, Trash2, Plus, LayoutTemplate } from 'lucide-react';
+import { User, Briefcase, GraduationCap, Code, LayoutList, Trash2, Plus, LayoutTemplate, Award } from 'lucide-react';
 
 function ResumeForm({ resumeData, setResumeData, selectedTemplate, setSelectedTemplate }) {
   const handleChange = (section, field, value) => {
@@ -326,7 +326,7 @@ function ResumeForm({ resumeData, setResumeData, selectedTemplate, setSelectedTe
         </button>
       </section>
 
-      <section className="form-section" style={{marginBottom: '40px'}}>
+      <section className="form-section">
         <h2 className="section-title"><LayoutList size={20} /> Projects</h2>
         {resumeData.projects.map((proj) => (
           <div key={proj.id} className="item-card relative">
@@ -378,6 +378,53 @@ function ResumeForm({ resumeData, setResumeData, selectedTemplate, setSelectedTe
           onClick={() => handleAddArrayItem('projects', { name: '', technologies: '', link: '', description: '' })}
         >
           <Plus size={16} /> Add Project
+        </button>
+      </section>
+
+      <section className="form-section" style={{marginBottom: '40px'}}>
+        <h2 className="section-title"><Award size={20} /> Certifications & Recognition</h2>
+        {(resumeData.certifications || []).map((cert) => (
+          <div key={cert.id} className="item-card relative">
+            <button 
+              className="btn-remove" 
+              onClick={() => handleRemoveArrayItem('certifications', cert.id)}
+              title="Remove Certification"
+            >
+              <Trash2 size={16} />
+            </button>
+            <div className="input-grid">
+              <div className="input-group">
+                <label>Certification Name</label>
+                <input 
+                  type="text" 
+                  value={cert.name} 
+                  onChange={(e) => handleArrayChange('certifications', cert.id, 'name', e.target.value)}
+                />
+              </div>
+              <div className="input-group">
+                <label>Issuing Organization</label>
+                <input 
+                  type="text" 
+                  value={cert.issuer} 
+                  onChange={(e) => handleArrayChange('certifications', cert.id, 'issuer', e.target.value)}
+                />
+              </div>
+              <div className="input-group">
+                <label>Date Earned</label>
+                <input 
+                  type="text" 
+                  value={cert.date} 
+                  onChange={(e) => handleArrayChange('certifications', cert.id, 'date', e.target.value)}
+                />
+              </div>
+            </div>
+          </div>
+        ))}
+        <button 
+          className="btn-add" 
+          onClick={() => handleAddArrayItem('certifications', { name: '', issuer: '', date: '' })}
+        >
+          <Plus size={16} /> Add Certification
         </button>
       </section>
 

@@ -1,7 +1,7 @@
 
 
 function TemplateCompact({ resumeData }) {
-  const { personalInfo, summary, experience, education, skills, projects } = resumeData;
+  const { personalInfo, summary, experience, education, skills, projects, certifications } = resumeData;
 
   const renderBulletPoints = (text) => {
     if (!text) return null;
@@ -84,6 +84,27 @@ function TemplateCompact({ resumeData }) {
                   </div>
                   <div className="res-item-meta">
                     <span className="res-date">{edu.endDate}</span>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </section>
+      )}
+
+      {/* Certifications */}
+      {certifications && certifications.length > 0 && (
+        <section className="res-section">
+          <h3 className="res-section-title">Certifications & Recognition</h3>
+          <div className="res-items">
+            {certifications.map(cert => (
+              <div key={cert.id} className="res-item">
+                <div className="res-item-header">
+                  <div className="res-item-main">
+                    <span className="res-company">{cert.name}</span> {cert.issuer && <span>| <span className="res-role">{cert.issuer}</span></span>}
+                  </div>
+                  <div className="res-item-meta">
+                    <span className="res-date">{cert.date}</span>
                   </div>
                 </div>
               </div>

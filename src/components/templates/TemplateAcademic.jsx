@@ -1,7 +1,7 @@
 
 
 function TemplateAcademic({ resumeData }) {
-  const { personalInfo, summary, experience, education, skills, projects } = resumeData;
+  const { personalInfo, summary, experience, education, skills, projects, certifications } = resumeData;
 
   const renderBulletPoints = (text) => {
     if (!text) return null;
@@ -105,6 +105,31 @@ function TemplateAcademic({ resumeData }) {
                       </div>
                     </div>
                     <p className="res-proj-desc">{proj.description}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </section>
+        )}
+
+        {certifications && certifications.length > 0 && (
+          <section className="res-section academic-section">
+            <div className="academic-left">
+              <h3 className="res-section-title">Certifications & Recognition</h3>
+            </div>
+            <div className="academic-right">
+              <div className="res-items">
+                {certifications.map(cert => (
+                  <div key={cert.id} className="res-item">
+                    <div className="res-item-header">
+                      <div className="res-item-main">
+                        <h4 className="res-company">{cert.name}</h4>
+                        {cert.issuer && <span className="res-role">{cert.issuer}</span>}
+                      </div>
+                      <div className="res-item-meta">
+                        <span className="res-date">{cert.date}</span>
+                      </div>
+                    </div>
                   </div>
                 ))}
               </div>

@@ -60,6 +60,14 @@ const INITIAL_STATE = {
       link: 'github.com/johndoe/taskflow',
       description: 'An open-source task management dashboard demonstrating modern web development best practices, clean design, and real-time state synchronization.'
     }
+  ],
+  certifications: [
+    {
+      id: '1',
+      name: 'AWS Certified Solutions Architect – Associate',
+      issuer: 'Amazon Web Services',
+      date: '2023'
+    }
   ]
 };
 
