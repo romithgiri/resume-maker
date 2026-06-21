@@ -1,8 +1,8 @@
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import html2pdf from 'html2pdf.js';
 import ResumeForm from './components/ResumeForm';
 import ResumePreview from './components/ResumePreview';
-import { Download, FileText } from 'lucide-react';
+import { Download, FileText, Upload } from 'lucide-react';
 import './index.css';
 
 const INITIAL_STATE = {
@@ -66,6 +66,58 @@ const INITIAL_STATE = {
 function App() {
   const [resumeData, setResumeData] = useState(INITIAL_STATE);
   const [selectedTemplate, setSelectedTemplate] = useState('default');
+  const fileInputRef = useRef(null);
+
+  const handleExportJSON = () => {
+    const dataStr = JSON.stringify({ resumeData, selectedTemplate }, null, 2);
+    const blob = new Blob([dataStr], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    const name = resumeData.personalInfo.fullName.replace(/\s+/g, '_') || 'Resume';
+    link.href = url;
+    link.download = `${name}_data.json`;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    URL.revokeObjectURL(url);
+  };
+
+  const handleImportClick = () => {
+    if (fileInputRef.current) {
+      fileInputRef.current.click();
+    }
+  };
+
+  const handleImportJSON = (e) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    const reader = new FileReader();
+    reader.onload = (event) => {
+      try {
+        const parsed = JSON.parse(event.target.result);
+        if (parsed && typeof parsed === 'object') {
+          const incomingData = parsed.resumeData || parsed;
+          if (incomingData && incomingData.personalInfo && typeof incomingData.personalInfo === 'object') {
+            setResumeData(incomingData);
+            if (parsed.selectedTemplate) {
+              setSelectedTemplate(parsed.selectedTemplate);
+            }
+            alert('Resume data imported successfully!');
+          } else {
+            alert('Invalid file format: Could not find valid resume data structure.');
+          }
+        } else {
+          alert('Invalid file format: Selected file is not a valid JSON object.');
+        }
+      } catch (err) {
+        console.error(err);
+        alert('Error parsing file: Please make sure it is a valid JSON file.');
+      }
+    };
+    reader.readAsText(file);
+    e.target.value = ''; // clear select state
+  };
 
   const handlePrint = () => {
     const element = document.querySelector('#resume-preview-root .resume-document');
@@ -103,10 +155,27 @@ function App() {
           <FileText size={24} className="icon" />
           <h1>ResumeBuilder <span className="highlight">Pro</span></h1>
         </div>
-        <button className="btn-primary" onClick={handlePrint}>
-          <Download size={18} />
-          <span>Download PDF</span>
-        </button>
+        <div className="header-actions">
+          <button className="btn-secondary" onClick={handleExportJSON} title="Export filled data as JSON file">
+            <Download size={16} />
+            <span>Export JSON</span>
+          </button>
+          <button className="btn-secondary" onClick={handleImportClick} title="Import data from JSON file">
+            <Upload size={16} />
+            <span>Import JSON</span>
+          </button>
+          <input 
+            type="file" 
+            ref={fileInputRef} 
+            onChange={handleImportJSON} 
+            accept=".json" 
+            style={{ display: 'none' }} 
+          />
+          <button className="btn-primary" onClick={handlePrint}>
+            <Download size={18} />
+            <span>Download PDF</span>
+          </button>
+        </div>
       </header>
 
       <main className="app-main">
