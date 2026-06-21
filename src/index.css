@@ -728,3 +728,191 @@ textarea {
   page-break-after: avoid;
   break-after: avoid;
 }
+
+/* =========================================
+   Responsive Design & Mobile Compatibility
+   ========================================= */
+
+@media (max-width: 1024px) {
+  .app-container {
+    height: auto;
+    overflow: visible;
+  }
+
+  .app-main {
+    flex-direction: column;
+    overflow: visible;
+  }
+
+  .left-panel {
+    max-width: 100%;
+    border-right: none;
+    border-bottom: 1px solid var(--panel-border);
+    padding: 24px 20px;
+  }
+
+  .right-panel {
+    padding: 24px 20px;
+    background-color: transparent;
+    overflow: visible;
+  }
+
+  .preview-container {
+    width: 100%;
+    max-width: 100%;
+    min-height: auto;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+  }
+
+  .resume-document {
+    width: 100% !important;
+    min-height: auto !important;
+    padding: 1.2cm 1.5cm !important;
+  }
+
+  /* Template-specific responsive adjustments */
+  .template-modern .res-header-modern {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+
+  .template-modern .header-right {
+    align-items: flex-start;
+  }
+
+  .template-academic .academic-section {
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .template-academic .academic-left {
+    width: 100%;
+    padding-right: 0;
+  }
+}
+
+@media (max-width: 600px) {
+  .app-header {
+    padding: 12px 16px;
+    flex-direction: column;
+    gap: 12px;
+    align-items: center;
+    text-align: center;
+  }
+
+  .logo {
+    justify-content: center;
+  }
+
+  .btn-primary {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .left-panel {
+    padding: 16px 12px;
+  }
+
+  .right-panel {
+    padding: 16px 12px;
+  }
+
+  .form-section {
+    padding: 16px;
+  }
+
+  .input-grid {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  .res-contact {
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .res-contact span:not(:last-child)::after {
+    display: none;
+  }
+
+  .res-item-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 4px;
+  }
+
+  .res-item-meta {
+    text-align: left;
+  }
+
+  .res-role,
+  .res-link {
+    margin-left: 0;
+    display: block;
+  }
+
+  .res-date {
+    margin-left: 0;
+  }
+}
+
+/* =========================================
+   PDF Export Mode Override Styles
+   Forces A4 styling temporarily during PDF generation
+   ========================================= */
+
+body.pdf-export-mode .resume-document {
+  width: 21cm !important;
+  min-height: 29.5cm !important;
+  padding: 1.5cm 2cm !important;
+}
+
+body.pdf-export-mode .res-contact {
+  flex-direction: row !important;
+  justify-content: center !important;
+  gap: 12px !important;
+}
+
+body.pdf-export-mode .res-contact span:not(:last-child)::after {
+  display: inline !important;
+}
+
+body.pdf-export-mode .res-item-header {
+  flex-direction: row !important;
+  justify-content: space-between !important;
+  align-items: baseline !important;
+}
+
+body.pdf-export-mode .res-item-meta {
+  text-align: right !important;
+}
+
+body.pdf-export-mode .res-role,
+body.pdf-export-mode .res-link {
+  margin-left: 8px !important;
+  display: inline-block !important;
+}
+
+body.pdf-export-mode .res-date {
+  margin-left: 8px !important;
+}
+
+body.pdf-export-mode .template-modern .res-header-modern {
+  flex-direction: row !important;
+  align-items: flex-end !important;
+}
+
+body.pdf-export-mode .template-modern .header-right {
+  align-items: flex-end !important;
+}
+
+body.pdf-export-mode .template-academic .academic-section {
+  flex-direction: row !important;
+}
+
+body.pdf-export-mode .template-academic .academic-left {
+  width: 120px !important;
+  padding-right: 16px !important;
+}

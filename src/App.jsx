@@ -71,6 +71,9 @@ function App() {
     const element = document.querySelector('#resume-preview-root .resume-document');
     if (!element) return;
 
+    // Temporarily add class to force A4 dimensions on mobile during render
+    document.body.classList.add('pdf-export-mode');
+
     const opt = {
       margin: 0,
       filename: `${resumeData.personalInfo.fullName.replace(/\s+/g, '_')}_Resume.pdf`,
@@ -85,7 +88,12 @@ function App() {
       pagebreak: { mode: ['css', 'legacy'] }
     };
 
-    html2pdf().set(opt).from(element).save();
+    html2pdf().set(opt).from(element).save().then(() => {
+      document.body.classList.remove('pdf-export-mode');
+    }).catch((err) => {
+      console.error('PDF Generation Error:', err);
+      document.body.classList.remove('pdf-export-mode');
+    });
   };
 
   return (
